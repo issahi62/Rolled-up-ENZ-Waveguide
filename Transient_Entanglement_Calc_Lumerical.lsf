@@ -1,0 +1,169 @@
+## Developed by : Ibrahim Issah 
+## Supervisor   : Assoc. Prof. Humeyra Caglayan
+## Faculty of Engineering and Natural Sciences, Photonics, 
+## Tampere University
+## https://research.tuni.fi/metaplasmonics/
+
+
+### LSF codes to extract the dyadic Green's function and its corresponding coupling parameters
+## dipole dipole interaction and decay rates
+
+############### INITIALIZE ########################################
+closeall; 
+clc; 
+##################################################################
+
+
+################## DASHBOARD ########################################
+nmodes =1; %## number of plots 
+ind=230; #== 0.1## dipole position value to be plotted
+#ind = 320; ## == r12/lambda = 1; 
+#ind = 268; ## == r12/lambda = 0.5; 
+time_value = 20; ## time 
+monitor_name = "monitor_1450"; ## Monitor name based on cutoff frequency 
+
+
+#From FDTD Solutions, get the value of Ez ( and eventually green's function)
+Ez = getdata(monitor_name,"Ey"); ## get the Efield to calculatee the Green's function
+Ez = pinch(Ez); ## squeeze command perform similar effect in Matlab
+ind_num = ceil(length(Ez(:, 1))/2); ## central value based on the data points
+
+#From theory, get the value of Ez ( and eventually green's function)
+
+z = getdata(monitor_name,"z"); ## emitter position
+mu = getdata("source1","moment"); ## dipole moment: one can equall use Decibel formalism
+f = getdata(monitor_name,"f"); ## frequency
+w = 2*pi*f; ## angular frequency
+k = 2*pi*f/c; ## wavenumber
+
+#lambda0 = c/f(1);  ## Uncomment this base on the cutoff wavelength for normalization
+lambda0 = 1450e-9;
+z = z/lambda0;
+
+G = matrix(length(Ez(:, 1)), length(f)); ## formation of empty array
+Ccc1 = matrix(length(Ez(:, 1)), length(f));  ## concurrence array
+lambda = matrix(length(f));  ## wavelength array
+n = length(1:nmodes:length(f)); ## lenght of plots
+leg = cell(n);   ## cell for storing legends arguments
+a=1;       
+
+############################################################
+for (i = 1:length(f)){    
+G(:, i)=(Ez(:, i))*c^2*eps0/(w(i)^2*mu);
+
+# calculate free space LDOS
+#rho_0=w^2/pi^2/c^3;
+# calculate rho from Green's function
+rho_z= [6*w(i)/pi/c^2]*imag(G); 
+rho_z = pinch(rho_z); 
+
+
+
+############################################################################################
+### spontenous decay rate ##################################################################
+############################################################################################ 
+
+gamma_one = [2*w(i)^2*abs(mu)^2]/hbar/eps0/c^2*imag(G); 
+gg  = gamma_one(ind_num); ## normalization section
+gamma = gamma_one/gg; 
+
+## Dipole coupling ################
+
+g12 = [w(i)^2*abs(mu)^2/(hbar*eps0*c^2)]*real(G); 
+gparam_norm = g12/gg;  
+
+##time case
+t = linspace(0/gg, time_value/gg, length(gamma(:, 1))); 
+
+## concurrence section 
+B = exp(-(gg+gamma_one(ind, i))*t); #p++
+C = exp(-(gg-gamma_one(ind, i))*t); #p--
+D = (B-C)^2; 
+E = 4*exp(-(2*gg*transpose(t)))*sin(2*g12(ind, i)*transpose(t))^2;
+Ccc1(:, i) = 0.5*sqrt(D + E);
+
+
+
+leg{a}=num2str(c/f(i)*1e9) + " nm";
+a = a + 1;
+}
+
+### Uncomments base on the data you would like to see
+
+### concurrence section 
+ #B1 = exp(-mult((gg+gamma_one), transpose(t))); 
+ #C1 = exp(-mult((gg-gamma_one), transpose(t))); 
+ #D1 = (B1-C1)^2; 
+ #BBk = sin(2*g12*transpose(t))^2;
+#E1 = 4*mult(exp(-(2*gg*t)), transpose(BBk)); 
+#Conc1 = 0.5*sqrt(D1 + E1);
+
+#C = 0.5*sqrt((exp(-(gamma371(450)+gamma371).*t) - exp(-(gamma371(450)-gamma371).*t)).^2 ...
+#+ 4*exp(-2*gamma371(450).*t).*(sin(2*U371'.*t)).^2);
+time_main = t*gg; ## time value for plotting
+
+#### plotting section ###################
+
+## spontaneos decay
+plot(z,gamma, "z/lambda0", "gamma", "spontenous decay rate", "linewidth=3");
+setplot('x min', 0); 
+setplot('x max', max(z)); 
+legend(leg);
+
+### local density of state as a function of dipole positions
+#plot(z,rho_z, "z/lambda0", "rho","local density of states","linewidth=3");
+#setplot('x min', 0); 
+#setplot('x max', max(z)); 
+#legend(leg);
+
+### real part pf EZ
+#plot(z,real(Ez), "z/lamda0","real(E)","real(E)", "linewidth=3");
+#setplot('x min', 0); 
+#setplot('x max', max(z));
+#setplot('y min', -1); 
+#setplot('y max', 1);
+#legend(leg); 
+
+### imaginary of Ey
+#plot(z,imag(Ez), "z/lambda0","imag(E)","imag(E)", "plot type=line,  linewidth=3");
+#setplot('x min', 0); 
+#setplot('x max', max(z));
+##setplot('y min', -1); 
+##setplot('y max', 1); 
+#legend(leg);
+
+### dipole-dipole coupling
+plot(z,gparam_norm, "z/lambda0", "g","dipole-dipole coupling","linewidth=3");
+setplot('x min', 0); 
+setplot('x max', max(z)); 
+setplot('y min', -1); 
+setplot('y max', 1);
+legend(leg);
+
+##concurrence, p++ and p-- density matrix
+plot(time_main,(Ccc1),0.5*B, 0.5*C, "time*gamma", "C(t)","concurrence","linewidth=3");
+setplot('x min', 0); 
+setplot('x max', max(time_main)); 
+legend('Concurrence', 'P++', 'P--');
+
+#concurrence with of a specific wavelength for plotting transient plot
+plot(time_main,(Ccc1), "time*gamma", "C(t)","concurrence","linewidth=3");
+setplot('x min', 0); 
+setplot('x max', max(time_main)); 
+legend(leg);
+
+
+plot(z,gparam_norm, gamma, "z/lambda0", "g","dipole-dipole coupling","linewidth=3");
+setplot('x min', 0); 
+setplot('x max', max(z)); 
+setplot('y min', -1); 
+setplot('y max', 1); 
+
+
+#plot(z,gparam_norm, gamma, "z/lambda0", "g","dipole-dipole coupling","linewidth=3");
+#setplot('x min', 0); 
+#setplot('x max', max(z)); 
+#setplot('y min', 0); 
+#setplot('y max', 1); 
+
+#image(z, time_main, Conc1); 
