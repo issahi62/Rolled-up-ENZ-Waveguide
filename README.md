@@ -15,6 +15,6 @@ https://research.tuni.fi/metaplasmonics/
 
 Name         | Output                                                                                                  |
 ------------ |:-------------------------------------------------------------------------------------------------------:|
-Process |![youngs]( https://github.com/issahi62/FDTD_simulation/blob/master/1slit_Fdtd_simulation.png)            |     
-Measure of Entanglement |![youngs]( https://github.com/issahi62/FDTD_simulation/blob/master/2slit_Fdtd_simulation.png)            |                 |
-Index plot of concurrence |![youngs]( https://github.com/issahi62/FDTD_simulation/blob/master/3slit_Fdtd_simulation.png)            |                 |
+Process |![youngs]( https://github.com/issahi62/Rolled-up-ENZ-Waveguide/blob/main/fig8main.png)            |     
+Measure of Entanglement |![youngs]( https://github.com/issahi62/Rolled-up-ENZ-Waveguide/blob/main/fig8main.png)            |                 |
+Index plot of concurrence |![youngs]( https://github.com/issahi62/Rolled-up-ENZ-Waveguide/blob/main/fig8main.png)            |                 |
