@@ -17,4 +17,4 @@ Name         | Output                                                           
 ------------ |:-------------------------------------------------------------------------------------------------------:|
 Process |![youngs]( https://github.com/issahi62/Rolled-up-ENZ-Waveguide/blob/main/process_image.PNG)            |     
 Measure of Entanglement |![youngs]( https://github.com/issahi62/Rolled-up-ENZ-Waveguide/blob/main/fig8main.png)            |                 |
-Index plot of concurrence |![youngs]( https://github.com/issahi62/Rolled-up-ENZ-Waveguide/blob/main/fig8main.png)            |                 |
+Index plot of concurrence |![youngs]( https://github.com/issahi62/Rolled-up-ENZ-Waveguide/blob/main/image.png)            |                 |
