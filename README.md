@@ -11,11 +11,11 @@ Quantum Entanglement of Emitters Coupled with Rolled-up Epsilon-near-zero Wavegu
 please don't forget to star if you like it 
 
 kindly check our group at Tampere University 
-Group sites        | Websites                                                                                          |
+Group sites        | Websites                                                                                                |
 ------------       |:-------------------------------------------------------------------------------------------------------:|
-Metaplasmonic site |   https://research.tuni.fi/metaplasmonics/      |    
-ERC AQUARIUM site  |    https://projects.tuni.fi/aquarium/           | 
-twitter account    | https://twitter.com/metaplasmonics              |
+Metaplasmonic site |   https://research.tuni.fi/metaplasmonics/     |    
+ERC AQUARIUM site  |   https://projects.tuni.fi/aquarium/           | 
+twitter account    |   https://twitter.com/metaplasmonics           |
 
 
 
