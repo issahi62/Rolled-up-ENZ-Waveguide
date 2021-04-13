@@ -15,7 +15,7 @@ Group sites        | Websites                                                   
 ------------       |:-------------------------------------------------------------------------------------------------------:|
 Metaplasmonic site |   https://research.tuni.fi/metaplasmonics/     |    
 ERC AQUARIUM site  |   https://projects.tuni.fi/aquarium/           | 
-twitter account    |   https://twitter.com/metaplasmonics           |
+Twitter account    |   https://twitter.com/metaplasmonics           |
 
 
 
