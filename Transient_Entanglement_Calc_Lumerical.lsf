@@ -15,7 +15,7 @@ clc;
 
 
 ################## DASHBOARD ########################################
-nmodes =1; %## number of plots 
+nmodes =1; ## number of plots 
 ind=230; #== 0.1## dipole position value to be plotted
 #ind = 320; ## == r12/lambda = 1; 
 #ind = 268; ## == r12/lambda = 0.5; 
@@ -31,7 +31,7 @@ ind_num = ceil(length(Ez(:, 1))/2); ## central value based on the data points
 #From theory, get the value of Ez ( and eventually green's function)
 
 z = getdata(monitor_name,"z"); ## emitter position
-mu = getdata("source1","moment"); ## dipole moment: one can equall use Decibel formalism
+mu = getdata("source","moment"); ## dipole moment: one can equall use Decibel formalism
 f = getdata(monitor_name,"f"); ## frequency
 w = 2*pi*f; ## angular frequency
 k = 2*pi*f/c; ## wavenumber
